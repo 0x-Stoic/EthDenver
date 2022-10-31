@@ -9,7 +9,7 @@ contract VolcanoCoin {
     
     event SupplyUpdate(uint);
     event transferUpdate(address,uint);
-
+  
     mapping(address => uint) balances;
    
     struct Payment {
@@ -17,7 +17,9 @@ contract VolcanoCoin {
         uint amount;
     }
 
-    mapping(address => Payment) public paymentArray;
+    Payment[] Payments;
+
+    mapping(address => Payment[]) public paymentArray;
 
     Payment transfer;
 
@@ -58,5 +60,6 @@ contract VolcanoCoin {
         emit transferUpdate(receipient, transferAmount);
         transfer.addr = receipient;
         transfer.amount = transferAmount;
+        paymentArray[msg.sender].push(Payment(receipient,transferAmount));
     }
 }
