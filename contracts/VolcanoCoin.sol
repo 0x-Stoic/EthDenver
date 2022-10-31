@@ -9,6 +9,7 @@ contract VolcanoCoin {
     
     event SupplyUpdate(uint);
     event transferUpdate(address,uint);
+    event seeArray(Payment[]);
   
     mapping(address => uint) balances;
    
@@ -17,13 +18,11 @@ contract VolcanoCoin {
         uint amount;
     }
 
-    Payment[] Payments;
+    Payment[] public Payments;
 
     mapping(address => Payment[]) public paymentArray;
 
-    Payment transfer;
-
-    constructor() {
+      constructor() {
         owner = msg.sender;
         balances[owner] = supply; 
     }
@@ -58,8 +57,7 @@ contract VolcanoCoin {
         balances[receipient] += transferAmount;
         balances[msg.sender] -= transferAmount;
         emit transferUpdate(receipient, transferAmount);
-        transfer.addr = receipient;
-        transfer.amount = transferAmount;
+        //Payments[Payments.length+1] = Payment(receipient,transferAmount);
         paymentArray[msg.sender].push(Payment(receipient,transferAmount));
     }
 }
